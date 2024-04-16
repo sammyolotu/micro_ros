@@ -5,7 +5,17 @@
 #include <rclc/rclc.h>
 #include <rclc/executor.h>
 #include <sensor_msgs/msg/joy.h>
-#include <FastLED.h>
+
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+  #include <avr/power.h>
+#endif
+
+#define PIN            4  // Define the pin where the data line is connected
+#define NUM_LEDS       9 // Number of LEDs in the strip
+
+#define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
+#define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
 
 
 static sensor_msgs__msg__Joy joy_msg;
@@ -16,11 +26,7 @@ rclc_support_t support;
 rcl_allocator_t allocator;
 rcl_node_t node;
 rcl_timer_t timer;
-
-#define LED_PIN LED_BUILTIN
-
-#define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
-#define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){}}
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
 
 
 void error_loop() {
@@ -40,22 +46,20 @@ void error_loop() {
 
 void subscription_callback(const void* msgin) {
   const sensor_msgs__msg__Joy *msg = (const sensor_msgs__msg__Joy *)msgin;
-  FastLED.clear(); // Turn off LEDs
-  FastLED.show();
-
+  
   // Wait for the A button to be pressed
   while (true) {
     if (msg->buttons.size > 0 && msg->buttons.data[0] == 1) {
       break; // Exit loop if button is pressed
     }
     delay(10); // Slight delay to debounce and prevent high CPU usage
-    // Ideally, re-check button state here, but it's not shown due to the static msg pointer(check bottom chatgpt comments for more info)
+    // Ideally, re-check button state here, but it's not shown due to the static msg pointer
   }
 
   // Light up LEDs in order when A button is pressed
   for (int i = 0; i < NUM_LEDS; i++) {
-    leds[i] = CRGB::Green;
-    FastLED.show();
+    strip.setPixelColor(i, strip.Color(0, 255, 0)); // Set pixel color to green
+    strip.show(); // Update the strip with new settings
     delay(50);
   }
 
@@ -70,10 +74,11 @@ void subscription_callback(const void* msgin) {
 
   // Turn off LEDs in reverse order when A button is released
   for (int i = NUM_LEDS - 1; i >= 0; i--) {
-    leds[i] = CRGB::Black;
-    FastLED.show();
+    strip.setPixelColor(i, strip.Color(0, 0, 0)); // Turn pixel off
+    strip.show();
     delay(50);
   }
+  
 }
 
 
@@ -154,6 +159,9 @@ void setup() {
   // create executor
   RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
   RCCHECK(rclc_executor_add_subscription(&executor, &subscriber, &joy_msg, &subscription_callback, ON_NEW_DATA));
+
+  strip.begin(); // Initialize the NeoPixel strip
+  strip.show();  // Initialize all pixels to 'off'
 }
 
 void loop() {
