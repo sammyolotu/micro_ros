@@ -5,7 +5,7 @@
 
 ### 1. Microros Subscriber
 
-1. Upload Arduino subscriber Script (something.ino) from the Arduino IDE
+1. Upload Arduino subscriber Script (something.ino) from the Arduino IDE, then double press arduino and upload UF2 file
 2. Launch the ROS2 environment on Docker. For this, go to the micro_ros workspace and run:
 
 ```
@@ -41,7 +41,11 @@ ros2 topic pub /joy sensor_msgs/msg/Joy " (press tab here)
 ros2 run joy joy_node 
 ```
 
-
+# Re-running
+1. Upload arduino code, press button, e.t.c
+2. control c to stop micro-ros program in terminal
+3. disconnect then re-connect arduino
+4. run: ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0
 
 # Other
 
