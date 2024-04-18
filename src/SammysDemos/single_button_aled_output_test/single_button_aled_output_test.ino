@@ -17,7 +17,7 @@
 // Neopixels
 #include <Adafruit_NeoPixel.h>
 
-#define LED_PIN 4  // Define the pin where the data line is connected
+#define LED_PIN 4  // Defines the GPIO pin where the data line is connecteD
 
 #define NUM_LEDS 21  //9  // Number of LEDs in the strip
 
@@ -91,14 +91,18 @@ void subscription_callback(const void *msgin) {
   if (msg->axes.size > 0) {
     int LEFT_STICK_X = 0; 
     int LEFT_STICK_Y = 1;
+    int RIGHT_STICK_X = 2
 
-    int RIGHT_ARROW_LED = 3;
+    int UP_ARROW_LED = 1;
+    int CLOCKWISE_ARROW_LED = 2;
+    int LEFT_ARROW_LED = 5;
+    int ANTICLOCKWISE_ARROW_LED = 6;
+    int DOWN_ARROW_LED = 7;
     
     float ACTIVATION_THRESHOLD = 0.3;
 
 
     //&& msg->buttons.data[0] == 1
-    // TODO: Do minimum of size and led
 
     if (msg->axes.data[LEFT_STICK_X] < -ACTIVATION_THRESHOLD) {
       float intensity = - msg->axes.data[LEFT_STICK_X];
@@ -106,16 +110,26 @@ void subscription_callback(const void *msgin) {
     }
     if (msg->axes.data[LEFT_STICK_X] > ACTIVATION_THRESHOLD) {
       float intensity = msg->axes.data[LEFT_STICK_X];
-      pixels.setPixelColor(5, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
+      pixels.setPixelColor(LEFT_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     }
     if (msg->axes.data[LEFT_STICK_Y] > ACTIVATION_THRESHOLD) {
       float intensity =  msg->axes.data[LEFT_STICK_Y];
-      pixels.setPixelColor(1, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
+      pixels.setPixelColor(UP_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     }
     if (msg->axes.data[LEFT_STICK_Y] < -ACTIVATION_THRESHOLD) {
       float intensity = - msg->axes.data[LEFT_STICK_Y];
-      pixels.setPixelColor(7, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
+      pixels.setPixelColor(DOWN_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     }
+    if (msg->axes.data[RIGHT_STICK_X] > ACTIVATION_THRESHOLD) {
+      float intensity =  msg->axes.data[RIGHT_STICK_X];
+      pixels.setPixelColor(CLOCKWISE_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity)); 
+    }
+    if (msg->axes.data[RIGHT_STICK_X] < -ACTIVATION_THRESHOLD) {
+      float intensity = - msg->axes.data[RIGHT_STICK_X];
+      pixels.setPixelColor(DOWN_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
+    } 
+
+
 
     pixels.show();  // Update the pixel with new settings
   }
