@@ -17,7 +17,7 @@
 // Neopixels
 #include <Adafruit_NeoPixel.h>
 
-#define LED_PIN 4  // Defines the GPIO pin where the data line is connecteD
+#define LED_PIN 4  // Define the pin where the data line is connected, which is a GPIO pin
 
 #define NUM_LEDS 21  //9  // Number of LEDs in the strip
 
@@ -105,27 +105,27 @@ void subscription_callback(const void *msgin) {
     //&& msg->buttons.data[0] == 1
 
     if (msg->axes.data[LEFT_STICK_X] < -ACTIVATION_THRESHOLD) {
-      float intensity = - msg->axes.data[LEFT_STICK_X];
+      float intensity = sqrt(- msg->axes.data[LEFT_STICK_X]);
       pixels.setPixelColor(RIGHT_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     }
     if (msg->axes.data[LEFT_STICK_X] > ACTIVATION_THRESHOLD) {
-      float intensity = msg->axes.data[LEFT_STICK_X];
+      float intensity = sqrt(msg->axes.data[LEFT_STICK_X]);
       pixels.setPixelColor(LEFT_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     }
     if (msg->axes.data[LEFT_STICK_Y] > ACTIVATION_THRESHOLD) {
-      float intensity =  msg->axes.data[LEFT_STICK_Y];
+      float intensity =  sqrt(msg->axes.data[LEFT_STICK_Y]);
       pixels.setPixelColor(UP_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     }
     if (msg->axes.data[LEFT_STICK_Y] < -ACTIVATION_THRESHOLD) {
-      float intensity = - msg->axes.data[LEFT_STICK_Y];
+      float intensity = sqrt(- msg->axes.data[LEFT_STICK_Y]);
       pixels.setPixelColor(DOWN_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     }
     if (msg->axes.data[RIGHT_STICK_X] > ACTIVATION_THRESHOLD) {
-      float intensity =  msg->axes.data[RIGHT_STICK_X];
+      float intensity =  sqrt(msg->axes.data[RIGHT_STICK_X]);
       pixels.setPixelColor(CLOCKWISE_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity)); 
     }
     if (msg->axes.data[RIGHT_STICK_X] < -ACTIVATION_THRESHOLD) {
-      float intensity = - msg->axes.data[RIGHT_STICK_X];
+      float intensity = sqrt(- msg->axes.data[RIGHT_STICK_X]);
       pixels.setPixelColor(DOWN_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     } 
 
