@@ -5,7 +5,7 @@
 
 ### 1. Microros Subscriber
 
-1. Upload Arduino subscriber Script (something.ino) from the Arduino IDE (connect to Vin and GPIO4 pins)
+1. Upload Arduino subscriber Script (something.uf2) from the Arduino IDE (connect to Vin and GPIO4 pins)
 2. Launch the ROS2 environment on Docker. For this, go to the micro_ros workspace and run:
 
 ```
