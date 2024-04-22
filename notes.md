@@ -5,7 +5,7 @@
 
 ### 1. Microros Subscriber
 
-1. Upload Arduino subscriber Script (something.ino) from the Arduino IDE, then double press arduino and upload UF2 file
+1. Upload Arduino subscriber Script (something.ino) from the Arduino IDE (connect to Vin and GPIO4 pins)
 2. Launch the ROS2 environment on Docker. For this, go to the micro_ros workspace and run:
 
 ```
@@ -41,13 +41,15 @@ ros2 topic pub /joy sensor_msgs/msg/Joy " (press tab here)
 ros2 run joy joy_node 
 ```
 
-# Re-running
-1. Upload arduino code, press button, e.t.c
-2. control c to stop micro-ros program in terminal
-3. disconnect then re-connect arduino
-4. run: ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0
-
 # Other
+
+To re-upload
+1. compile arduino code
+2. Double press arduino reset button
+3. type control-c in terminal
+4. disconnect and re-connect arduino
+5. re-run ros2 micro-ros agent in terminal
+
 
 Publishing a float:
 
@@ -59,6 +61,6 @@ modified subscriber: my code
 joy subscriber: code that currently works, which turns portenta lights on
 micro-ros_light test: code to draw inspiration from as it does cool loading animations with LEDs.
 
-red :live
-green: ground
-black: data
+GREEN :live
+black: ground
+yellow: data
