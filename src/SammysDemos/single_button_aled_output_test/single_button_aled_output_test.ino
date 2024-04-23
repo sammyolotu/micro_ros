@@ -94,15 +94,14 @@ void subscription_callback(const void *msgin) {
     int RIGHT_STICK_X = 2
 
     int UP_ARROW_LED = 1;
-    int CLOCKWISE_ARROW_LED = 2;
-    int LEFT_ARROW_LED = 5;
-    int ANTICLOCKWISE_ARROW_LED = 6;
     int DOWN_ARROW_LED = 7;
+    int LEFT_ARROW_LED = 5;
+    int RIGHT_ARROW_LED = 3;
+    int CLOCKWISE_ARROW_LED = 2;
+    int ANTICLOCKWISE_ARROW_LED = 6;
+    
     
     float ACTIVATION_THRESHOLD = 0.3;
-
-
-    //&& msg->buttons.data[0] == 1
 
     if (msg->axes.data[LEFT_STICK_X] < -ACTIVATION_THRESHOLD) {
       float intensity = sqrt(- msg->axes.data[LEFT_STICK_X]);
@@ -126,7 +125,7 @@ void subscription_callback(const void *msgin) {
     }
     if (msg->axes.data[RIGHT_STICK_X] < -ACTIVATION_THRESHOLD) {
       float intensity = sqrt(- msg->axes.data[RIGHT_STICK_X]);
-      pixels.setPixelColor(DOWN_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
+      pixels.setPixelColor(ANTICLOCKWISE_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     } 
 
 
