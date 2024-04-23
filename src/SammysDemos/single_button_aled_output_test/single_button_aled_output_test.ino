@@ -91,7 +91,7 @@ void subscription_callback(const void *msgin) {
   if (msg->axes.size > 0) {
     int LEFT_STICK_X = 0; 
     int LEFT_STICK_Y = 1;
-    int RIGHT_STICK_X = 2
+    int RIGHT_STICK_X = 2;
 
     int UP_ARROW_LED = 1;
     int DOWN_ARROW_LED = 7;
