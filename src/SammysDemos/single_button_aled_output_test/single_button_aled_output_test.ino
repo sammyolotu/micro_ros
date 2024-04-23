@@ -91,7 +91,7 @@ void subscription_callback(const void *msgin) {
   if (msg->axes.size > 0) {
     int LEFT_STICK_X = 0; 
     int LEFT_STICK_Y = 1;
-    int RIGHT_STICK_X = 4;
+    int RIGHT_STICK_Y = 4;
 
     int UP_ARROW_LED = 1;
     int DOWN_ARROW_LED = 7;
@@ -119,12 +119,12 @@ void subscription_callback(const void *msgin) {
       float intensity = sqrt(- msg->axes.data[LEFT_STICK_Y]);
       pixels.setPixelColor(DOWN_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     }
-    if (msg->axes.data[RIGHT_STICK_X] > ACTIVATION_THRESHOLD) {
-      float intensity =  sqrt(msg->axes.data[RIGHT_STICK_X]);
+    if (msg->axes.data[RIGHT_STICK_Y] > ACTIVATION_THRESHOLD) {
+      float intensity =  sqrt(msg->axes.data[RIGHT_STICK_Y]);
       pixels.setPixelColor(CLOCKWISE_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity)); 
     }
-    if (msg->axes.data[RIGHT_STICK_X] < -ACTIVATION_THRESHOLD) {
-      float intensity = sqrt(- msg->axes.data[RIGHT_STICK_X]);
+    if (msg->axes.data[RIGHT_STICK_Y] < -ACTIVATION_THRESHOLD) {
+      float intensity = sqrt(- msg->axes.data[RIGHT_STICK_Y]);
       pixels.setPixelColor(ANTICLOCKWISE_ARROW_LED, pixels.Color(255*intensity, 255*intensity, 255*intensity));  
     } 
 
