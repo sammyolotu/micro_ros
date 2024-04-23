@@ -91,7 +91,7 @@ void subscription_callback(const void *msgin) {
   if (msg->axes.size > 0) {
     int LEFT_STICK_X = 0; 
     int LEFT_STICK_Y = 1;
-    int RIGHT_STICK_X = 2;
+    int RIGHT_STICK_X = 4;
 
     int UP_ARROW_LED = 1;
     int DOWN_ARROW_LED = 7;
@@ -101,7 +101,7 @@ void subscription_callback(const void *msgin) {
     int ANTICLOCKWISE_ARROW_LED = 6;
     
     
-    float ACTIVATION_THRESHOLD = 0.3;
+    float ACTIVATION_THRESHOLD = 0.8;
 
     if (msg->axes.data[LEFT_STICK_X] < -ACTIVATION_THRESHOLD) {
       float intensity = sqrt(- msg->axes.data[LEFT_STICK_X]);
